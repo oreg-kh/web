@@ -201,8 +201,8 @@ function initSidebarToggle(){
   const applyState = (hidden) => {
     shell.classList.toggle('submenus-hidden', hidden);
     appShell.classList.toggle('sidebar-collapsed', hidden);
-    btn.innerHTML = sidebarToggleIcon(hidden);
-    collapsedBtn.innerHTML = sidebarToggleIcon(hidden);
+    btn.innerHTML = sidebarToggleIcon(true);
+    collapsedBtn.innerHTML = sidebarToggleIcon(false);
     localStorage.setItem('submenusHidden', hidden ? '1' : '0');
   };
 

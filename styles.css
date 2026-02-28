@@ -62,7 +62,7 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);c
 .topbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-start;width:100%}
 .bmc-inline-mount{display:flex;align-items:center;min-height:42px}
 .bmc-inline-mount img{display:block;height:40px;width:auto;border-radius:8px}
-.bmc-icon{display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--bg);align-items:center;justify-content:center}
+.bmc-icon{display:none;width:42px;height:42px;border:1px solid #e2b800;border-radius:10px;background:#ffdd00;align-items:center;justify-content:center}
 .bmc-icon svg{width:20px;height:20px;display:block}
 .progress-wrap{min-width:180px;height:42px;padding:5px 9px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
 .topbar-actions .progress-wrap{margin-right:auto}
