@@ -62,8 +62,8 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);c
 .topbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-start;width:100%}
 .bmc-inline-mount{display:flex;align-items:center;min-height:42px}
 .bmc-inline-mount img{display:block;height:40px;width:auto;border-radius:8px}
-.bmc-icon{display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--bg);align-items:center;justify-content:center}
-.bmc-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--text)}
+.bmc-icon{display:none;width:42px;height:42px;border:1px solid #e2b800;border-radius:10px;background:#ffdd00;align-items:center;justify-content:center}
+.bmc-icon svg{width:20px;height:20px;display:block}
 .progress-wrap{min-width:180px;height:42px;padding:5px 9px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
 .topbar-actions .progress-wrap{margin-right:auto}
 .progress-meta{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
@@ -95,35 +95,45 @@ th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
 
 @media (max-width: 1024px){
   .topbar-actions{gap:6px;flex-wrap:nowrap;padding-bottom:2px;justify-content:flex-end}
-    .topbar-actions .progress-wrap{margin-right:0}
+  .topbar-actions .progress-wrap{margin-right:0;position:fixed;bottom:12px;left:calc(70px + ((100vw - 70px) / 2));transform:translateX(-50%);z-index:40;width:min(340px,calc(100vw - 94px));min-width:220px;height:auto;padding:7px 10px;display:block}
   .btn{width:42px;min-width:42px;padding:0;justify-content:center}
   .btn > span:not(.btn-icon){display:none}
   .language-current{width:42px;min-width:42px;padding:0;justify-content:center}
   .language-current .lang-arrow,.language-current span:nth-child(2){display:none}
-  .progress-wrap{order:1;width:42px;min-width:42px;height:42px;padding:0;display:grid;place-items:center}
-  .progress-meta,.progress-track{display:none}
-  .progress-wrap::before{content:'';display:block;width:18px;height:18px;background:center/contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' fill='none' stroke='%23f59e0b' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='5.5' fill='none' stroke='%23f97316' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='2' fill='%23ef4444'/%3E%3Cpath d='M21 3l-5 5' stroke='%23fbbf24' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")}
+  .progress-meta,.progress-track{display:flex}
+  .progress-track{display:block}
+  .progress-wrap::before{content:none}
   .bmc-inline-mount{order:2}
   #discordAddBtn{order:3}
   #supportBtn{order:4}
   .language-picker{order:5}
   .bmc-inline-mount img{display:none}
   .bmc-icon{display:inline-flex}
+  .content{padding-bottom:90px}
 }
 
 @media (max-width: 768px){
   .topbar{padding:8px 10px;gap:6px}
 }
 @media (max-width: 1100px){
-  .app-shell{grid-template-columns:1fr;height:100vh}
+  .app-shell,.app-shell.sidebar-collapsed{grid-template-columns:1fr;height:100vh}
   .sidebar-shell{grid-template-columns:70px 1fr;position:absolute;top:0;left:0;bottom:0;z-index:20;width:min(360px,92vw);height:100vh;background:#0f1218;backdrop-filter:none}
+  .sidebar-collapse-toggle-collapsed{left:calc(70px - 8px);top:22px;z-index:45}
   .icon-rail{background:#0f1218}
   .sidebar-panel{background:#0f1218}
   .sidebar-header{background:#0f1218}
-  .sidebar-shell.submenus-hidden{width:70px !important;max-width:70px;background:#0f1218;grid-template-columns:70px 0 !important;overflow:hidden;z-index:2}
-  .main-shell{position:relative;z-index:3}
+  .sidebar-shell.submenus-hidden{width:70px !important;max-width:70px;background:#0f1218;grid-template-columns:70px 0 !important;overflow:visible;z-index:8}
+  .main-shell{position:relative;z-index:3;margin-left:70px;width:calc(100% - 70px)}
   .sidebar-title{font-size:16px}
   .crumbs{font-size:18px}
+}
+
+
+@media (max-width: 1100px){
+  body{overflow-y:auto;overflow-x:hidden}
+  .app-shell{height:auto;min-height:100vh}
+  .main-shell{overflow:visible}
+  .content{overflow:visible}
 }
 
 :root[data-theme="light"] .sidebar-shell{background:#fff;border-right:1px solid var(--line)}
