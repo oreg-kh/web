@@ -142,7 +142,7 @@ const DEFAULT_I18N = {
   "tr": { "topbar.discordAdd": "Discord'a ekle", "topbar.support": "Destek", "topbar.language": "Dil", "topbar.monthlyGoal": "Aylık hedef" }
 };
 
-const state = { lang: 'hu', theme: 'system', menu: null, i18n: null, active: null, activeGroupId: null, discordWidgetLoaded: false, discordWidgetTheme: null };
+const state = { lang: 'hu', theme: 'system', menu: null, i18n: null, active: null, activeGroupId: null, discordWidgetLoaded: false, discordWidgetTheme: null, discordWidgetOutsideBound: false };
 const icons = {
   intro: `<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 5v14M4 10h16"/></svg>`,
   slash: `<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M7 10.5 10 12 7 13.5"/><path d="M12 14h5"/></svg>`,
@@ -250,6 +250,7 @@ async function initDiscordSupportWidget(){
 
   btn.onclick = async (e)=>{
     e.preventDefault();
+    e.stopPropagation();
     const open = panel.classList.toggle('open');
     btn.setAttribute('aria-expanded', String(open));
     if(open){
@@ -263,6 +264,17 @@ async function initDiscordSupportWidget(){
       loading.style.display = 'none';
     }
   };
+
+  panel.onclick = (e)=> e.stopPropagation();
+  if(!state.discordWidgetOutsideBound){
+    document.addEventListener('click', (e)=>{
+      if(!panel.classList.contains('open')) return;
+      if(btn.contains(e.target) || panel.contains(e.target)) return;
+      panel.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+    state.discordWidgetOutsideBound = true;
+  }
 
   try{
     const res = await fetch(`https://discord.com/api/guilds/${guildId}/widget.json`);

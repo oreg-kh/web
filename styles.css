@@ -97,9 +97,10 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);c
 .support-meta small{font-size:12px;font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 #discordAddBtn > span:not(.btn-icon){font-weight:700}
-:root[data-theme="light"] .btn-discord{background:#2563eb;border-color:#1d4ed8;color:#ffffff}
+:root[data-theme="light"] .btn-discord{background:#dbeafe;border-color:#93c5fd;color:#1d4ed8}
 :root[data-theme="light"] .btn-support{background:#e5e7eb;border-color:#d1d5db;color:#111827}
 :root[data-theme="light"] .btn-support:hover{background:#dbe0e7}
+:root[data-theme="light"] .btn-discord:hover{background:#bfdbfe;border-color:#60a5fa;color:#1e40af}
 
 .content{padding:20px;overflow:auto}
 .card{background:var(--main);border:1px solid var(--line);border-radius:14px;padding:18px}
