@@ -142,7 +142,7 @@ const DEFAULT_I18N = {
   "tr": { "topbar.discordAdd": "Discord'a ekle", "topbar.support": "Destek", "topbar.language": "Dil", "topbar.monthlyGoal": "Aylık hedef" }
 };
 
-const state = { lang: 'hu', theme: 'system', menu: null, i18n: null, active: null, activeGroupId: null, discordWidgetLoaded: false };
+const state = { lang: 'hu', theme: 'system', menu: null, i18n: null, active: null, activeGroupId: null, discordWidgetLoaded: false, discordWidgetTheme: null };
 const icons = {
   intro: `<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 5v14M4 10h16"/></svg>`,
   slash: `<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M7 10.5 10 12 7 13.5"/><path d="M12 14h5"/></svg>`,
@@ -239,24 +239,28 @@ function buildTopbar() {
 async function initDiscordSupportWidget(){
   const guildId = '891626562871525398';
   const btn = document.getElementById('supportBtn');
-  const label = document.getElementById('supportBtnLabel');
+  const supportName = document.getElementById('supportBtnName');
+  const supportStatus = document.getElementById('supportBtnStatus');
   const panel = document.getElementById('discordWidgetPanel');
   const name = document.getElementById('discordWidgetName');
   const status = document.getElementById('discordWidgetStatus');
   const frame = document.getElementById('discordWidgetFrame');
   const loading = document.getElementById('discordWidgetLoading');
-  if(!btn || !label || !panel || !name || !status || !frame || !loading) return;
+  if(!btn || !supportName || !supportStatus || !panel || !name || !status || !frame || !loading) return;
 
   btn.onclick = async (e)=>{
     e.preventDefault();
     const open = panel.classList.toggle('open');
     btn.setAttribute('aria-expanded', String(open));
-    if(open && !state.discordWidgetLoaded){
+    if(open){
       const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-      frame.src = `https://discord.com/widget?id=${guildId}&theme=${theme}`;
+      if(!state.discordWidgetLoaded || state.discordWidgetTheme !== theme){
+        frame.src = `https://discord.com/widget?id=${guildId}&theme=${theme}`;
+        state.discordWidgetLoaded = true;
+        state.discordWidgetTheme = theme;
+      }
       frame.style.display = 'block';
       loading.style.display = 'none';
-      state.discordWidgetLoaded = true;
     }
   };
 
@@ -266,11 +270,13 @@ async function initDiscordSupportWidget(){
     const data = await res.json();
     const serverName = data.name || 'Discord szerver';
     const online = data.presence_count ?? 0;
-    label.textContent = `${serverName} • ${online} online`;
+    supportName.textContent = serverName;
+    supportStatus.textContent = `${online} online`;
     name.textContent = serverName;
     status.textContent = `${online} tag online`;
   }catch{
-    label.textContent = 'Discord szerver';
+    supportName.textContent = 'Discord szerver';
+    supportStatus.textContent = 'A widget adatai most nem érhetők el';
     name.textContent = 'Discord szerver';
     status.textContent = 'A widget adatai most nem érhetők el';
   }
