@@ -72,7 +72,7 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);c
 .bmac-widget{text-decoration:none;color:#2a1f10;background:#ffdd7e;border:1px solid #f2bf2e;padding:8px 10px;border-radius:9px;font-weight:600}
 .btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;border:1px solid rgba(255,255,255,.25);padding:8px 11px;height:42px;text-decoration:none;color:#fff}
 #supportBtn{height:42px;min-width:190px;justify-content:flex-start}
-.btn-discord{background:#3b82f6;border-color:#2563eb} .btn-discord:hover{background:#2563eb} .btn-support{background:#3f4755;border-color:#596273} .btn-support:hover{background:#4b5563}
+.btn-discord{background:#3b82f6;border-color:#2563eb;color:#ffffff} .btn-discord:hover{background:#2563eb} .btn-discord .btn-icon{color:#ffffff} .btn-support{background:#3f4755;border-color:#596273} .btn-support:hover{background:#4b5563}
 .btn-icon svg{width:18px;height:18px;display:block}
 .flag-img{width:22px;height:16px;display:block;border-radius:2px;object-fit:cover;box-shadow:0 0 0 1px rgba(0,0,0,.18)}
 .language-picker{position:relative}
@@ -96,11 +96,13 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);c
 .support-meta strong{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .support-meta small{font-size:12px;font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
+#discordAddBtn{align-items:center;justify-content:center}
 #discordAddBtn > span:not(.btn-icon){font-weight:700}
-:root[data-theme="light"] .btn-discord{background:#dbeafe;border-color:#93c5fd;color:#1d4ed8}
+:root[data-theme="light"] .btn-discord{background:#3b82f6;border-color:#2563eb;color:#ffffff}
 :root[data-theme="light"] .btn-support{background:#e5e7eb;border-color:#d1d5db;color:#111827}
 :root[data-theme="light"] .btn-support:hover{background:#dbe0e7}
-:root[data-theme="light"] .btn-discord:hover{background:#bfdbfe;border-color:#60a5fa;color:#1e40af}
+:root[data-theme="light"] .btn-discord:hover{background:#2563eb;border-color:#1d4ed8;color:#ffffff}
+:root[data-theme="light"] .btn-discord .btn-icon{color:#ffffff}
 
 .content{padding:20px;overflow:auto}
 .card{background:var(--main);border:1px solid var(--line);border-radius:14px;padding:18px}
