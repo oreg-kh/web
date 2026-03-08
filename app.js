@@ -142,7 +142,7 @@ const DEFAULT_I18N = {
   "tr": { "topbar.discordAdd": "Discord'a ekle", "topbar.support": "Destek", "topbar.language": "Dil", "topbar.monthlyGoal": "Aylık hedef" }
 };
 
-const state = { lang: 'hu', theme: 'system', menu: null, i18n: null, active: null, activeGroupId: null };
+const state = { lang: 'hu', theme: 'system', menu: null, i18n: null, active: null, activeGroupId: null, discordWidgetLoaded: false };
 const icons = {
   intro: `<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 5v14M4 10h16"/></svg>`,
   slash: `<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M7 10.5 10 12 7 13.5"/><path d="M12 14h5"/></svg>`,
@@ -215,9 +215,9 @@ function initSidebarToggle(){
 
 function buildTopbar() {
   document.getElementById('discordIcon').innerHTML = icons.discord;
-  document.getElementById('supportIcon').innerHTML = icons.support;
+  document.getElementById('supportIcon').innerHTML = `<img class="support-avatar-icon" src="images/brian-the-barbarian.png" alt="Brian the Barbarian"/>`;
   document.getElementById('discordAddBtn').href = state.menu.settings.discord.addBotUrl;
-  document.getElementById('supportBtn').href = state.menu.settings.discord.supportServerUrl;
+  initDiscordSupportWidget();
   document.querySelectorAll('[data-i18n]').forEach(n=> n.textContent = t(n.dataset.i18n));
   document.getElementById('progressLabel').textContent = t('topbar.monthlyGoal');
   const picker = document.getElementById('languagePicker');
@@ -233,6 +233,47 @@ function buildTopbar() {
   });
   current.onclick = (e)=> { e.stopPropagation(); picker.classList.toggle('open'); };
   document.onclick = (e) => { if (!picker.contains(e.target)) picker.classList.remove('open'); };
+}
+
+
+async function initDiscordSupportWidget(){
+  const guildId = '891626562871525398';
+  const btn = document.getElementById('supportBtn');
+  const label = document.getElementById('supportBtnLabel');
+  const panel = document.getElementById('discordWidgetPanel');
+  const name = document.getElementById('discordWidgetName');
+  const status = document.getElementById('discordWidgetStatus');
+  const frame = document.getElementById('discordWidgetFrame');
+  const loading = document.getElementById('discordWidgetLoading');
+  if(!btn || !label || !panel || !name || !status || !frame || !loading) return;
+
+  btn.onclick = async (e)=>{
+    e.preventDefault();
+    const open = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+    if(open && !state.discordWidgetLoaded){
+      const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      frame.src = `https://discord.com/widget?id=${guildId}&theme=${theme}`;
+      frame.style.display = 'block';
+      loading.style.display = 'none';
+      state.discordWidgetLoaded = true;
+    }
+  };
+
+  try{
+    const res = await fetch(`https://discord.com/api/guilds/${guildId}/widget.json`);
+    if(!res.ok) throw new Error('widget');
+    const data = await res.json();
+    const serverName = data.name || 'Discord szerver';
+    const online = data.presence_count ?? 0;
+    label.textContent = `${serverName} • ${online} online`;
+    name.textContent = serverName;
+    status.textContent = `${online} tag online`;
+  }catch{
+    label.textContent = 'Discord szerver';
+    name.textContent = 'Discord szerver';
+    status.textContent = 'A widget adatai most nem érhetők el';
+  }
 }
 
 
