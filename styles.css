@@ -72,13 +72,13 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);c
 .bmac-widget{text-decoration:none;color:#2a1f10;background:#ffdd7e;border:1px solid #f2bf2e;padding:8px 10px;border-radius:9px;font-weight:600}
 .btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;border:1px solid rgba(255,255,255,.25);padding:8px 11px;height:42px;text-decoration:none;color:#fff}
 #supportBtn{height:42px;min-width:190px;justify-content:flex-start}
-.btn-discord{background:#3f4755;border-color:#596273;color:#000000} .btn-discord:hover{background:#4b5563} .btn-discord .btn-icon{color:#000000} .btn-support{background:#3f4755;border-color:#596273} .btn-support:hover{background:#4b5563}
+.btn-discord{background:#3f4755;border-color:#596273;color:#ffffff} .btn-discord:hover{background:#4b5563;color:#ffffff} .btn-discord .btn-icon{color:#ffffff} .btn-support{background:#3f4755;border-color:#596273} .btn-support:hover{background:#4b5563}
 .btn-icon svg{width:18px;height:18px;display:block}
 .flag-img{width:22px;height:16px;display:block;border-radius:2px;object-fit:cover;box-shadow:0 0 0 1px rgba(0,0,0,.18)}
 .language-picker{position:relative}
-.language-current{display:flex;align-items:center;gap:8px;height:42px;background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:7px 8px;cursor:pointer}
+.language-current{display:flex;align-items:center;gap:8px;height:42px;background:#3f4755;border:1px solid #596273;color:var(--text);border-radius:8px;padding:7px 8px;cursor:pointer}
 .language-picker.open .lang-arrow svg{transform:rotate(180deg)}
-.language-menu{display:none;position:absolute;right:0;top:calc(100% + 6px);z-index:50;width:max-content;max-width:min(92vw,360px);max-height:none;overflow:visible;background:var(--main);border:1px solid var(--line);border-radius:10px}
+.language-menu{display:none;position:absolute;right:0;top:calc(100% + 6px);z-index:50;width:max-content;max-width:min(92vw,360px);max-height:none;overflow:visible;background:#3f4755;border:1px solid #596273;border-radius:10px}
 .language-picker.open .language-menu{display:block}
 .language-item{width:100%;display:flex;gap:8px;align-items:center;padding:7px 10px;background:transparent;border:none;color:var(--text);cursor:pointer;white-space:nowrap}
 .language-item:hover{background:var(--bg)}
@@ -98,11 +98,13 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);c
 
 #discordAddBtn{align-items:center;justify-content:center}
 #discordAddBtn > span:not(.btn-icon){font-weight:700}
-:root[data-theme="light"] .btn-discord{background:#e5e7eb;border-color:#d1d5db;color:#ffffff}
+:root[data-theme="light"] .btn-discord{background:#e5e7eb;border-color:#d1d5db;color:#000000}
 :root[data-theme="light"] .btn-support{background:#e5e7eb;border-color:#d1d5db;color:#111827}
 :root[data-theme="light"] .btn-support:hover{background:#dbe0e7}
-:root[data-theme="light"] .btn-discord:hover{background:#dbe0e7;border-color:#cbd5e1;color:#ffffff}
-:root[data-theme="light"] .btn-discord .btn-icon{color:#ffffff}
+:root[data-theme="light"] .language-current{background:#e5e7eb;border-color:#d1d5db}
+:root[data-theme="light"] .language-menu{background:#e5e7eb;border-color:#d1d5db}
+:root[data-theme="light"] .btn-discord:hover{background:#dbe0e7;border-color:#cbd5e1;color:#000000}
+:root[data-theme="light"] .btn-discord .btn-icon{color:#000000}
 
 .content{padding:20px;overflow:auto}
 .card{background:var(--main);border:1px solid var(--line);border-radius:14px;padding:18px}
