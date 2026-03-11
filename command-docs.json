@@ -77,11 +77,11 @@
       "options": [
         {
           "name": "coins",
-          "type": "integer",
+          "type": "number",
           "required": true,
           "source": "input",
           "values": [],
-          "format": "min: 1"
+          "format": "1"
         }
       ],
       "subcommands": {}
@@ -91,7 +91,7 @@
       "options": [
         {
           "name": "limit",
-          "type": "integer",
+          "type": "number",
           "required": true,
           "source": "input",
           "values": [],
@@ -149,7 +149,7 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         },
         {
@@ -157,7 +157,7 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         },
         {
@@ -165,7 +165,7 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         }
       ],
@@ -184,7 +184,7 @@
         },
         {
           "name": "required_pack",
-          "type": "integer",
+          "type": "number",
           "required": true,
           "source": "input",
           "values": [],
@@ -195,12 +195,12 @@
           "type": "boolean",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         },
         {
           "name": "spear",
-          "type": "integer",
+          "type": "number",
           "required": false,
           "source": "input",
           "values": [],
@@ -208,7 +208,7 @@
         },
         {
           "name": "sword",
-          "type": "integer",
+          "type": "number",
           "required": false,
           "source": "input",
           "values": [],
@@ -216,7 +216,7 @@
         },
         {
           "name": "archer",
-          "type": "integer",
+          "type": "number",
           "required": false,
           "source": "input",
           "values": [],
@@ -224,7 +224,7 @@
         },
         {
           "name": "heavy",
-          "type": "integer",
+          "type": "number",
           "required": false,
           "source": "input",
           "values": [],
@@ -232,7 +232,7 @@
         },
         {
           "name": "spy",
-          "type": "integer",
+          "type": "number",
           "required": false,
           "source": "input",
           "values": [],
@@ -277,7 +277,7 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         },
         {
@@ -285,7 +285,7 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         },
         {
@@ -392,7 +392,7 @@
         },
         {
           "name": "time",
-          "type": "integer",
+          "type": "number",
           "required": false,
           "source": "input",
           "values": [],
@@ -414,7 +414,7 @@
         },
         {
           "name": "required_pack",
-          "type": "integer",
+          "type": "number",
           "required": true,
           "source": "input",
           "values": [],
@@ -482,7 +482,7 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         },
         {
@@ -490,7 +490,7 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         },
         {
@@ -689,7 +689,7 @@
           "type": "boolean",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         }
       ],
@@ -786,7 +786,7 @@
               "type": "boolean",
               "required": true,
               "source": "input",
-              "values": [],
+              "values": [true/false],
               "format": ""
             }
           ]
@@ -814,7 +814,7 @@
               "type": "boolean",
               "required": true,
               "source": "input",
-              "values": [],
+              "values": [true/false],
               "format": ""
             },
             {
@@ -837,7 +837,7 @@
           "type": "boolean",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         }
       ],
@@ -851,7 +851,7 @@
           "type": "boolean",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": [true/false],
           "format": ""
         }
       ],
