@@ -74,14 +74,7 @@ const DEFAULT_MENU = {
         { "type": "page", "id": "terms", "labelKey": "policies.terms", "contentKey": "pages.terms" }
       ]
     }
-  ],
-  "commandDocs": {
-    "defaultAccess": "Bárki",
-    "defaultOptions": [
-      { "name": "target", "type": "string", "value": ["player", "tribe", "ally"] },
-      { "name": "world", "type": "number", "value": ["101"] }
-    ]
-  }
+  ]
 };
 
 const DEFAULT_I18N = {
@@ -142,7 +135,26 @@ const DEFAULT_I18N = {
   "tr": { "topbar.discordAdd": "Discord'a ekle", "topbar.support": "Destek", "topbar.language": "Dil", "topbar.monthlyGoal": "Aylık hedef" }
 };
 
-const state = { lang: 'hu', theme: 'light', menu: null, i18n: null, active: null, activeGroupId: null, discordWidgetLoaded: false, discordWidgetTheme: null, discordWidgetOutsideBound: false };
+
+const DEFAULT_COMMAND_DOCS = {
+  defaultAccess: 'Bárki',
+  defaultDescription: 'A bot automatizált folyamatot indít, validációkat végez, majd naplózza az eredményt.',
+  defaultOptions: [
+    { name: 'target', type: 'string', required: false, values: ['player', 'tribe', 'ally'] },
+    { name: 'world', type: 'number', required: false, values: ['101'] }
+  ],
+  commands: {
+    '/register-world-channel': {
+      description: 'Világ csatornához regisztrálása. A parancsban kötelezően meg kell adni egy domaint és egy világot; a világ mező automatikus kiegészítést használ.',
+      options: [
+        { name: 'domain', type: 'string', required: true, values: ['SERVERS domain lista (choice)'] },
+        { name: 'world', type: 'string', required: true, values: ['Autocomplete: kiválasztható világ'] }
+      ]
+    }
+  }
+};
+
+const state = { lang: 'hu', theme: 'light', menu: null, i18n: null, commandDocs: null, active: null, activeGroupId: null, discordWidgetLoaded: false, discordWidgetTheme: null, discordWidgetOutsideBound: false };
 const icons = {
   intro: `<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 5v14M4 10h16"/></svg>`,
   slash: `<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M7 10.5 10 12 7 13.5"/><path d="M12 14h5"/></svg>`,
@@ -169,11 +181,12 @@ async function fetchJsonWithFallback(path, fallback) {
 }
 
 async function init() {
-  const [menu, i18n] = await Promise.all([
+  const [menu, i18n, commandDocs] = await Promise.all([
     fetchJsonWithFallback('menu.json', DEFAULT_MENU),
-    fetchJsonWithFallback('translations.json', DEFAULT_I18N)
+    fetchJsonWithFallback('translations.json', DEFAULT_I18N),
+    fetchJsonWithFallback('command-docs.json', DEFAULT_COMMAND_DOCS)
   ]);
-  state.menu = menu; state.i18n = i18n;
+  state.menu = menu; state.i18n = i18n; state.commandDocs = commandDocs;
   state.lang = localStorage.getItem('lang') || 'hu';
   const storedTheme = localStorage.getItem('theme');
   state.theme = (storedTheme === 'dark' || storedTheme === 'light') ? storedTheme : 'light';
@@ -392,28 +405,23 @@ function renderPage(page, crumb){
 
 function renderCommand(cmd, groupKey, subKey){
   const imageName = cmd.replace(/^\//, '').replace(/\s+/g, '-');
-  const customDocs = {
-    '/register-world-channel': {
-      description: 'Világ csatornához regisztrálása. A parancsban kötelezően meg kell adni egy domaint és egy világot; a világ mező automatikus kiegészítést használ.',
-      options: [
-        { name: 'domain', type: 'string', value: ['A konfigurált domainek listája (választható)'] },
-        { name: 'world', type: 'string', value: ['Világ az adott domainen (autocomplete)'] }
-      ]
-    }
-  };
-  const doc = customDocs[cmd];
-  const commandOptions = doc?.options || state.menu.commandDocs.defaultOptions;
+  const docsConfig = state.commandDocs || DEFAULT_COMMAND_DOCS;
+  const doc = docsConfig.commands?.[cmd];
+  const commandOptions = doc?.options || docsConfig.defaultOptions || [];
   const options = commandOptions.map(o=>{
-    const value = o.value.length>1 ? `<select>${o.value.map(v=>`<option>${v}</option>`).join('')}</select>` : o.value[0];
-    return `<tr><td>${o.name}</td><td>${o.type}</td><td>${value}</td></tr>`;
+    const values = o.values || o.value || [];
+    const valueCell = values.length > 1 ? `<select>${values.map(v=>`<option>${v}</option>`).join('')}</select>` : (values[0] || '-');
+    return `<tr><td>${o.name || '-'}</td><td>${o.type || '-'}</td><td>${o.required ? 'Yes' : 'No'}</td><td>${valueCell}</td></tr>`;
   }).join('');
-  const description = doc?.description || `${cmd} parancs részletes leírása: a bot automatizált folyamatot indít, validációkat végez, majd naplózza az eredményt.`;
+  const fallbackDescription = `${cmd} ${docsConfig.defaultDescription || 'parancs részletes leírása.'}`;
+  const description = doc?.description || fallbackDescription;
+  const access = doc?.access || docsConfig.defaultAccess || 'Bárki';
   setTopBreadcrumb(['Dashboard', t('sidebar.commands'), t(subKey), cmd]);
   document.getElementById('content').innerHTML = `<div class="card">
     <h1>${cmd}</h1>
     <p>${description}</p>
-    <p><strong>${t('content.access')}:</strong> ${state.menu.commandDocs.defaultAccess}</p>
-    <div class="table-wrap"><table><thead><tr><th>${t('content.optionName')}</th><th>${t('content.optionType')}</th><th>${t('content.optionValue')}</th></tr></thead><tbody>${options}</tbody></table></div>
+    <p><strong>${t('content.access')}:</strong> ${access}</p>
+    <div class="table-wrap"><table><thead><tr><th>Option</th><th>Type</th><th>Required</th><th>Values</th></tr></thead><tbody>${options}</tbody></table></div>
     <div class="figure"><strong>${t('content.demoImage')}:</strong><img src="images/${imageName}.png" alt="${cmd} demo" onerror="this.alt='Kép nem található'; this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p>Kép nem található: images/${imageName}.png</p>')"/></div>
   </div>`;
 }

@@ -109,7 +109,7 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);c
 .content{padding:20px;overflow:auto}
 .card{background:var(--main);border:1px solid var(--line);border-radius:14px;padding:18px}
 h1{margin:0 0 10px}
-.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+.table-wrap{overflow:auto}
 table{width:100%;border-collapse:collapse;min-width:520px}
 th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
 .figure{margin-top:14px;border:1px dashed var(--line);border-radius:10px;padding:10px}
