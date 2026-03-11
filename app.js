@@ -396,8 +396,8 @@ function renderCommand(cmd, groupKey, subKey){
     '/register-world-channel': {
       description: 'Világ csatornához regisztrálása. A parancsban kötelezően meg kell adni egy domaint és egy világot; a világ mező automatikus kiegészítést használ.',
       options: [
-        { name: 'domain', type: 'string', required: 'true', value: ['A konfigurált domainek listája (választható)'] },
-        { name: 'world', type: 'string', required: 'true', value: ['Világ az adott domainen (autocomplete)'] }
+        { name: 'domain', type: 'string', value: ['A konfigurált domainek listája (választható)'] },
+        { name: 'world', type: 'string', value: ['Világ az adott domainen (autocomplete)'] }
       ]
     }
   };
