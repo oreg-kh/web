@@ -392,14 +392,26 @@ function renderPage(page, crumb){
 
 function renderCommand(cmd, groupKey, subKey){
   const imageName = cmd.replace(/^\//, '').replace(/\s+/g, '-');
-  const options = state.menu.commandDocs.defaultOptions.map(o=>{
+  const customDocs = {
+    '/register-world-channel': {
+      description: 'Világ csatornához regisztrálása. A parancsban kötelezően meg kell adni egy domaint és egy világot; a világ mező automatikus kiegészítést használ.',
+      options: [
+        { name: 'domain', type: 'string', value: ['A konfigurált domainek listája (választható)'] },
+        { name: 'world', type: 'string', value: ['Világ az adott domainen (autocomplete)'] }
+      ]
+    }
+  };
+  const doc = customDocs[cmd];
+  const commandOptions = doc?.options || state.menu.commandDocs.defaultOptions;
+  const options = commandOptions.map(o=>{
     const value = o.value.length>1 ? `<select>${o.value.map(v=>`<option>${v}</option>`).join('')}</select>` : o.value[0];
     return `<tr><td>${o.name}</td><td>${o.type}</td><td>${value}</td></tr>`;
   }).join('');
+  const description = doc?.description || `${cmd} parancs részletes leírása: a bot automatizált folyamatot indít, validációkat végez, majd naplózza az eredményt.`;
   setTopBreadcrumb(['Dashboard', t('sidebar.commands'), t(subKey), cmd]);
   document.getElementById('content').innerHTML = `<div class="card">
     <h1>${cmd}</h1>
-    <p>${cmd} parancs részletes leírása: a bot automatizált folyamatot indít, validációkat végez, majd naplózza az eredményt.</p>
+    <p>${description}</p>
     <p><strong>${t('content.access')}:</strong> ${state.menu.commandDocs.defaultAccess}</p>
     <div class="table-wrap"><table><thead><tr><th>${t('content.optionName')}</th><th>${t('content.optionType')}</th><th>${t('content.optionValue')}</th></tr></thead><tbody>${options}</tbody></table></div>
     <div class="figure"><strong>${t('content.demoImage')}:</strong><img src="images/${imageName}.png" alt="${cmd} demo" onerror="this.alt='Kép nem található'; this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p>Kép nem található: images/${imageName}.png</p>')"/></div>
